@@ -80,7 +80,7 @@
       background: #eee;
       padding: 10px;
       border-radius: 10px;
-      word-break: break-all;
+      word-break: break-word;
       font-size: 0.85rem;
       margin-bottom: 10px;
     }
@@ -116,7 +116,7 @@
 <body>
   <div class="container">
     <h1>💸 Pay via Razorpay</h1>
-    <div class="small-text">Payment to: <strong id="upi-display">razorpay.me/non-profit</strong></div>
+    <div class="small-text">To: <strong id="razorpay-display">razorpay.me/non-profit</strong></div>
 
     <input type="number" id="amount" placeholder="Enter Amount (₹)" />
 
@@ -140,8 +140,10 @@
         return;
       }
 
-      const razorpayLink = `https://razorpay.me/non-profit?amount=${amount}00`; // Razorpay uses paise
-      document.getElementById("upi-display").innerText = "razorpay.me/non-profit";
+      const razorpayUser = "non-profit";
+      const razorpayLink = `https://razorpay.me/${razorpayUser}?amount=${amount}00`;
+
+      document.getElementById("razorpay-display").innerText = `razorpay.me/${razorpayUser}`;
       document.getElementById("paymentLinkBox").innerText = razorpayLink;
 
       const qrDiv = document.getElementById("qrcode");
@@ -155,7 +157,7 @@
     function copyLink() {
       const text = document.getElementById("paymentLinkBox").innerText;
       if (!text) {
-        alert("No link to copy. Generate a QR first.");
+        alert("No link to copy. Please generate a QR first.");
         return;
       }
       navigator.clipboard.writeText(text).then(() => {
